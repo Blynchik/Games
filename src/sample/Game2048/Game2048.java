@@ -51,7 +51,7 @@ private boolean isGameStopped = false;//игра остановлена?
         Color color = null;
         switch (value) {
             case 0:
-                color = Color.GREEN;
+                color = Color.WHITESMOKE;
                 break;
             case 2:
                 color = Color.YELLOW;
