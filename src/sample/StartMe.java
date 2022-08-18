@@ -35,7 +35,7 @@ public class StartMe extends Engine {
     private Stage primaryStage;
     private List<Button> buttons;
     public static final String JAVA_FX_LIB = "C:\\Users\\Blynchik\\Desktop\\Frames\\javafx-sdk-18.0.2\\lib";
-    public static final String GAME_ROOT = "C:/Users/Blynchik/Desktop/Games/src/bin/";
+    public static final String GAME_ROOT = "C:/Users/Blynchik/Desktop/Games/src/";
 
     private final String GAME2048_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Game2048/*.java";
     private final String GAME_SAPPER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Sapper/*.java";
@@ -44,17 +44,17 @@ public class StartMe extends Engine {
     private final String GAME_MOONLANDER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/MoonLander/*.java";
     private final String GAME_SPACE_INVADER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/SpaceInvaders/*.java";
 
-    private final String GAME2048_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.Game2048.Game2048";
-    private final String GAME_SAPPER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.Sapper.Sapper";
-    private final String GAME_SNAKE_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.Snake.SnakeGame";
-    private final String GAME_RACER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.Racer.RacerGame";
-    private final String GAME_MOONLANDER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.MoonLander.MoonLanderGame";
-    private final String GAME_SPACE_INVADERS_GAME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.SpaceInvaders.SpaceInvadersGame";
+    private final String GAME2048_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Game2048.Game2048";
+    private final String GAME_SAPPER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Sapper.Sapper";
+    private final String GAME_SNAKE_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Snake.SnakeGame";
+    private final String GAME_RACER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Racer.RacerGame";
+    private final String GAME_MOONLANDER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.MoonLander.MoonLanderGame";
+    private final String GAME_SPACE_INVADERS_GAME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.SpaceInvaders.SpaceInvadersGame";
 
-    public static final String START_ME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath bin sample.StartMe";
+    public static final String START_ME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe";
 
-    public static final String ENGINE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d bin sample/Engine/*.java";
-    public static final String START_ME_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d bin sample/StartMe.java";
+    public static final String ENGINE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/Engine/*.java";
+    public static final String START_ME_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java";
 
     public StartMe() {//конструктор
     }
