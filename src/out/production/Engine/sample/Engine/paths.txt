@@ -1,0 +1,2 @@
+C:\Users\Blynchik\Desktop\Frames\javafx-sdk-18.0.2\lib
+C:\Users\Blynchik\Desktop\Games\src
