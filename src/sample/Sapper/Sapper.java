@@ -2,7 +2,9 @@ package sample.Sapper;
 
 
 import sample.Engine.*;
+import sample.StartMe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,12 @@ public class Sapper extends Engine {
     private GameObject[][] gameField = new GameObject[SIDE][SIDE];// игровое поле это двумерный массив, состоящий из объектов GameObject
 
     private boolean isGameStopped;//игра остановлена?
+    private String annotation = "The goal of the game is to find all mines\n" +
+                                "on the minefield.\n" +
+                                "You can open a cell with a click or mark it\n" +
+                                "with the right mouse button.\n" +
+                                "                Enjoy your time!\n" +
+                                "       SPACE - OK, ESC - main menu";
 
     private static final String MINE = "\uD83D\uDCA3";//здесь храним кодировку на бомбу
     private static final String FLAG = "\uD83D\uDEA9";//здесь храним кодировку на флаг
@@ -33,12 +41,14 @@ public class Sapper extends Engine {
 
     private void win() {//метод победы
         isGameStopped = true;//игра остановлена
-        showMessageDialog(Color.WHITE, "Вы победили", Color.BLACK, 50);//показываем диалоговое окно
+        showMessageDialog(Color.WHITE, "YOU WIN", Color.BLACK, 50);//показываем диалоговое окно
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 
     private void gameOver() {//метод завершает игру
         isGameStopped = true;//игра остановлена
         showMessageDialog(Color.WHITE, "GAME OVER", Color.BLACK, 50);//показываем диалоговое окно
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 
     private void markTile(int x, int y) {//метод устанавливает флаги и сопутствующие действия
@@ -138,6 +148,7 @@ public class Sapper extends Engine {
         }
         countMineNeighbors();//считаем заминированных соседей
         countFlags = countMinesOnField;//количество доступных флагов равно количеству оставшихся мин
+        setAnnotation(annotation);
     }
 
     public void initialize() { // инициализируем игру...
@@ -147,8 +158,7 @@ public class Sapper extends Engine {
     }
 
     public void onMouseLeftClick(int x, int y) {
-        if (isGameStopped) {//если игра остановлена
-            restart();//запускаем метод рестарт, если нажата ЛКМ
+        if (isGameStopped) {
             return;
         }
         openTile(x, y);
@@ -157,5 +167,21 @@ public class Sapper extends Engine {
     public void onMouseRightClick(int x, int y) {//если клик ПКМ, то вызываем этот метод(отрисовка флага) по координатам
         markTile(x, y);
     }//по ПКМ устанавливаем флаги по координатам
+
+    public void onKeyPress(Key key) {
+        if (isGameStopped && key == Key.SPACE) {//если игра остановлена
+            restart();//запускаем метод рестарт, если нажата ЛКМ
+            return;
+        } else if (key == Key.ESCAPE) {
+            try {
+                Runtime.getRuntime().exec(StartMe.ENGINE_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_START);
+                System.exit(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
 

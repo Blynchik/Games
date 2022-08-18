@@ -2,6 +2,9 @@ package sample.Racer;
 
 import sample.Racer.road.*;
 import sample.Engine.*;
+import sample.StartMe;
+
+import java.io.IOException;
 
 
 public class RacerGame extends Engine {
@@ -13,10 +16,17 @@ public class RacerGame extends Engine {
     private PlayerCar player;//машина игрока
     private RoadManager roadManager;//отрисовка и передвижение объектов
     private boolean isGameStopped;//остановлена или игра
+    private boolean firstStart = true;
     private FinishLine finishLine;//финишная черта
     private static final int RACE_GOAL_CARS_COUNT = 40;//количество пройденных препятствий до победы
     private ProgressBar progressBar;
     private int score;
+    private String annotation = "The goal of the game is to reach the finish line.\n" +
+                                "When you press \u2B06 \u2b05 \u27A1 you can\n" +
+                                "change direction and speed of the car.\n" +
+                                "As faster you reach the line, as more points you earn.\n" +
+                                "                Enjoy your time!\n" +
+                                "       SPACE - OK, ESC - main menu";
 
     @Override
     public void initialize() {//инициализация
@@ -35,7 +45,7 @@ public class RacerGame extends Engine {
         drawScene();//отрисовываем сцену
         setTurnTimer(40);//изменения каждые 40мс
         isGameStopped = false;//игра не остановлена
-
+        setAnnotation(annotation);
     }
 
     private void drawScene() {//метод отрисовывает сцену
@@ -82,6 +92,9 @@ public class RacerGame extends Engine {
 
     @Override
     public void onTurn(int step) {//метод отвечает за то, что происходит за каждый момент
+        if (firstStart) {
+            return;
+        }
         if (roadManager.checkCrush(player) == true) {//если столкновение было
             gameOver();//конец игры
             drawScene();//отрисовывем сцену
@@ -105,6 +118,17 @@ public class RacerGame extends Engine {
 
     @Override
     public void onKeyPress(Key key) {//метод передает инф о нажатой кнопке
+        if (key == Key.ESCAPE) {
+            try {
+                Runtime.getRuntime().exec(StartMe.ENGINE_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_START);
+                System.exit(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
         if (key == Key.RIGHT) {
             player.setDirection(Direction.RIGHT);
         } else if (key == Key.LEFT) {
@@ -117,6 +141,10 @@ public class RacerGame extends Engine {
 
         if (key == Key.UP) {//если нажата клавиша вверх
             player.speed = 2;//скорость увеливается в 2 раза
+        }
+
+        if (firstStart && key == key.SPACE) {
+            firstStart = false;
         }
     }
 
@@ -136,6 +164,7 @@ public class RacerGame extends Engine {
     private void gameOver() {//метод проигрыша
         isGameStopped = true;//игра остановлена
         showMessageDialog(Color.WHITE, "YOU LOST", Color.BLACK, 75);
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
         stopTurnTimer();//таймер остановлен
         player.stop();//машина оставновлена
     }
@@ -143,6 +172,7 @@ public class RacerGame extends Engine {
     private void win() {//метод победы
         isGameStopped = true;//игра остановлена
         showMessageDialog(Color.WHITE, "YOU WIN", Color.BLACK, 75);//вывод сообщения
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
         stopTurnTimer();//таймер остановлен
     }
 }

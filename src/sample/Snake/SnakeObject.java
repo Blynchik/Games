@@ -79,28 +79,28 @@ public class SnakeObject {//создаем саму змейку из игров
     }
 
     public void move(Apple apple) {//метод отвечает за передвижение змейки
-        GameObject head = createNewHead();//создаем голову
-        if (head.x >= SnakeGame.WIDTH//если положение головы вне пределов рамок игры
-                || head.y >= SnakeGame.HEIGHT
-                || head.x < 0
-                || head.y < 0) {
-            isAlive = false;//змейка мертва
-            return;//ничего не делаем
-        }
+            GameObject head = createNewHead();//создаем голову
+            if (head.x >= SnakeGame.WIDTH//если положение головы вне пределов рамок игры
+                    || head.y >= SnakeGame.HEIGHT
+                    || head.x < 0
+                    || head.y < 0) {
+                isAlive = false;//змейка мертва
+                return;//ничего не делаем
+            }
 
-        if (checkCollision(head)) {//если есть столкновение
-            isAlive = false;//змейка мертва
-            return;//ничего не делаем
-        }
+            if (checkCollision(head)) {//если есть столкновение
+                isAlive = false;//змейка мертва
+                return;//ничего не делаем
+            }
 
-        if (head.x == apple.x && head.y == apple.y) {//если положение головы совпадает с положением яблока
-            apple.isAlive = false;//яблоко мертво
-            snakeParts.add(0, head);//создаем новую голову
-        } else {//если не совпадает с положением яблока
-            snakeParts.add(0, head);//если положение головы нормальное, то добавляем голову в список элементов змейки
-            removeTail();//удаляем хвост
+            if (head.x == apple.x && head.y == apple.y) {//если положение головы совпадает с положением яблока
+                apple.isAlive = false;//яблоко мертво
+                snakeParts.add(0, head);//создаем новую голову
+            } else {//если не совпадает с положением яблока
+                snakeParts.add(0, head);//если положение головы нормальное, то добавляем голову в список элементов змейки
+                removeTail();//удаляем хвост
+            }
         }
-    }
 
     public boolean checkCollision(GameObject gameObject) {//метод проверяет столкнулась ли змейка с собой
         boolean collision = false;//по умолчанию не столкнулась

@@ -1,6 +1,9 @@
 package sample.Snake;
 
 import sample.Engine.*;
+import sample.StartMe;
+
+import java.io.IOException;
 
 public class SnakeGame extends Engine {
 
@@ -8,8 +11,15 @@ public class SnakeGame extends Engine {
     private SnakeObject snake;//это змейка
     private int turnDelay;//время хода
     private boolean isGameStopped;//игра остановлена
+    static boolean firstStart = true;
     private static final int GOAL = 28;//яблок до победы
     private int score;//количество очков
+    private String annotation = "The goal of the game is to eat apples.\n" +
+                                "When you press \u2B06 \u2b07 \u2b05 \u27A1 you can\n" +
+                                "change snake move direction.\n" +
+                                "Each apple increase snake's speed.\n" +
+                                "                Enjoy your time!\n" +
+                                "       SPACE - OK, ESC - main menu";
 
     public static final int WIDTH = 15;//ширина игрового поля
     public static final int HEIGHT = 15;//высота игрового поля
@@ -27,6 +37,7 @@ public class SnakeGame extends Engine {
         createNewApple();//создаем яблоко по координатам
         isGameStopped = false;//игра не остановлена
         setScore(score);//устанавливаем количество очков
+        setAnnotation(annotation);
         drawScene();//отрисовываем сцену
     }
 
@@ -41,24 +52,38 @@ public class SnakeGame extends Engine {
     }
 
     public void onTurn(int step) {//метод определяет, что происходит за ход
-        snake.move(apple);//змейка передвигается
-        if (apple.isAlive == false) {//если яблоко съели
-            createNewApple();//создается новое яблоко
-            score+=5;//количество очков +5
-            setScore(score);//устанавливаем количество очков
-            turnDelay-=10;//ускоряем игру, уменьшая задержу
-            setTurnTimer(turnDelay);//устанавливаем задержку
+        if (firstStart == true) {
+            return;
+        } else {
+            snake.move(apple);//змейка передвигается
+            if (apple.isAlive == false) {//если яблоко съели
+                createNewApple();//создается новое яблоко
+                score += 5;//количество очков +5
+                setScore(score);//устанавливаем количество очков
+                turnDelay -= 10;//ускоряем игру, уменьшая задержу
+                setTurnTimer(turnDelay);//устанавливаем задержку
+            }
+            if (snake.isAlive == false) {//если змейка мертва
+                gameOver();//завершаем игру
+            }
+            if (snake.getLength() > GOAL) {//если длина змейки больше макисмального количества очков
+                win();//победа
+            }
+            drawScene();//отрисовываем сцену
         }
-        if (snake.isAlive == false) {//если змейка мертва
-            gameOver();//завершаем игру
-        }
-        if (snake.getLength() > GOAL) {//если длина змейки больше макисмального количества очков
-            win();//победа
-        }
-        drawScene();//отрисовываем сцену
     }
 
     public void onKeyPress(Key key) {//метод определяет движение змейки в зависимости от нажатой клавиши
+        if (key == Key.ESCAPE) {
+            try {
+                Runtime.getRuntime().exec(StartMe.ENGINE_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_START);
+                System.exit(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         if(key == Key.SPACE && isGameStopped == true){//если нажат пробел и игра остановлена
             createGame();//начинаем новую игру
         }
@@ -71,6 +96,10 @@ public class SnakeGame extends Engine {
             snake.setDirection(Direction.RIGHT);
         } else if(key == Key.LEFT){
             snake.setDirection(Direction.LEFT);
+        }
+
+        if (firstStart && key == key.SPACE) {
+            firstStart = false;
         }
     }
 
@@ -88,11 +117,13 @@ public class SnakeGame extends Engine {
         stopTurnTimer();//останавливаем таймер
         isGameStopped = true;//игра остановлена
         showMessageDialog(Color.WHITE, "GAME OVER", Color.BLACK, 75);//выводим сообщение
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 
     private void win() {//метод завершает игру при победе
         stopTurnTimer();//останавливаем таймер
         isGameStopped = true;//игра остановлена
         showMessageDialog(Color.WHITE, "YOU WIN", Color.BLACK, 75);//выводим сообщение
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 }

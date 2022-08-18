@@ -1,16 +1,28 @@
 package sample.Game2048;
 
 import sample.Engine.*;
+import sample.StartMe;
+
+import java.io.IOException;
 
 public class Game2048 extends Engine {
     private static final int SIDE = 4;//задаем размер игрового поля
     private int[][] gameField = new int[SIDE][SIDE];//массив будет хранить состояние клетки
-private boolean isGameStopped = false;//игра остановлена?
+    private boolean isGameStopped = false;//игра остановлена?
     private int score;//очки
+    private String annotation = "The goal of the game is to score 2048 points\n" +
+                                "in one of the cells.\n" +
+                                "When you press \u2B06 \u2b07 \u2b05 \u27A1 numbers are\n" +
+                                "shifting to the edge of the field.\n" +
+                                "The same numbers will summed up.\n" +
+                                "Every turn random 2 or 4 will appear on empty\n" +
+                                "cells. Enjoy your time!\n" +
+                                "       SPACE - OK, ESC - main menu";
 
     public void initialize() {//инициализация
         setScreenSize(SIDE, SIDE);//создаем игровое поле
         createGame();//создание объектов игры
+        setAnnotation(annotation);
         drawScene();//отрисовываем сцену
     }
 
@@ -29,7 +41,7 @@ private boolean isGameStopped = false;//игра остановлена?
     }
 
     private void createNewNumber() {
-        if(getMaxTileValue()==2048){//если максимальное число 2048
+        if (getMaxTileValue() == 2048) {//если максимальное число 2048
             win();//победа
         }
 
@@ -60,7 +72,7 @@ private boolean isGameStopped = false;//игра остановлена?
                 color = Color.ORANGE;
                 break;
             case 8:
-                color = Color.ALICEBLUE;
+                color = Color.GREENYELLOW;
                 break;
             case 16:
                 color = Color.ANTIQUEWHITE;
@@ -123,7 +135,7 @@ private boolean isGameStopped = false;//игра остановлена?
                         row[i] += row[i + 1];//они складываются
                         row[i + 1] = 0;//правое число становится 0
                         merged = true;//было слияние
-                        score = score+row[i];//складываем очки
+                        score = score + row[i];//складываем очки
                         setScore(score);
                     }
                 }
@@ -134,7 +146,7 @@ private boolean isGameStopped = false;//игра остановлена?
 
     @Override
     public void onKeyPress(Key key) {//метод реагирует на нажатие клавиши
-        if(isGameStopped) {//если игра остановлена
+        if (isGameStopped) {//если игра остановлена
             if (key == Key.SPACE) {//если нажата клавиша пробел
                 isGameStopped = false;//продолжаем игру
                 score = 0; //очки обнуляются
@@ -146,16 +158,27 @@ private boolean isGameStopped = false;//игра остановлена?
             }
         }
 
-        if(canUserMove() == false){//если игрок не может двигаться
+        if (key == Key.ESCAPE) {
+            try {
+                Runtime.getRuntime().exec(StartMe.ENGINE_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_START);
+                System.exit(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (canUserMove() == false) {//если игрок не может двигаться
             gameOver();//конец игры
             return;
-        } else if(key == Key.LEFT){//если нажато влево
+        } else if (key == Key.LEFT) {//если нажато влево
             moveLeft();//передвигаем все влево и т.д.
-        } else if(key==Key.RIGHT){
+        } else if (key == Key.RIGHT) {
             moveRight();
-        } else if(key==Key.UP){
+        } else if (key == Key.UP) {
             moveUp();
-        } else if (key == Key.DOWN){
+        } else if (key == Key.DOWN) {
             moveDown();
         } else {
             return;
@@ -163,25 +186,25 @@ private boolean isGameStopped = false;//игра остановлена?
         drawScene();
     }
 
-    private void moveLeft(){//метод сдвигает не пустые ячейки в левую часть игрового поля
+    private void moveLeft() {//метод сдвигает не пустые ячейки в левую часть игрового поля
         boolean needNewNum = false;//нужно ли добавить новое число?, т.к. при сдвиге и слиянии по правилам появляется новое число
-        for(int i = 0; i<SIDE; i++){// для всех ячеек в ряду
-            if(compressRow(gameField[i])){//если сдиг влево удался
+        for (int i = 0; i < SIDE; i++) {// для всех ячеек в ряду
+            if (compressRow(gameField[i])) {//если сдиг влево удался
                 needNewNum = true;//нужна еще одна цифра
             }
-            if(mergeRow(gameField[i])){//если было слияние
+            if (mergeRow(gameField[i])) {//если было слияние
                 needNewNum = true;//нужна еще одна цифра
             }
-            if(compressRow(gameField[i])){//если было слияние, то нужно еще раз сдвинуть влево
+            if (compressRow(gameField[i])) {//если было слияние, то нужно еще раз сдвинуть влево
                 needNewNum = true;//нужна еще одна цифра
             }
         }
-        if(needNewNum){//если цифра нужна
+        if (needNewNum) {//если цифра нужна
             createNewNumber();//добавляем ее 1 раз
         }
     }
 
-    private void moveRight(){//метод сдвигает ячейки вправо
+    private void moveRight() {//метод сдвигает ячейки вправо
         rotateClockwise();//2 раза повернем по часовой стрелке
         rotateClockwise();
         moveLeft();//переместим и сольем все ячейки слевой стороны
@@ -189,7 +212,7 @@ private boolean isGameStopped = false;//игра остановлена?
         rotateClockwise();
     }
 
-    private void moveUp(){//метод сдвигает ячейки вверх
+    private void moveUp() {//метод сдвигает ячейки вверх
         rotateClockwise();
         rotateClockwise();
         rotateClockwise();
@@ -197,7 +220,7 @@ private boolean isGameStopped = false;//игра остановлена?
         rotateClockwise();
     }
 
-    private void moveDown(){//метод сдвигает ячейки вниз
+    private void moveDown() {//метод сдвигает ячейки вниз
         rotateClockwise();
         moveLeft();
         rotateClockwise();
@@ -205,21 +228,21 @@ private boolean isGameStopped = false;//игра остановлена?
         rotateClockwise();
     }
 
-    private void rotateClockwise(){//метод поворачивает матрицу игрового поля на 90 градусов
-        int[][] result = new int [SIDE][SIDE];//создаем матрицу, где будут происходить все изменения
-        for(int y = 0; y < SIDE; y++){
-            for(int x = 0; x<SIDE;x++){
-                result[y][x] = gameField[SIDE-x-1][y];//копируем значения из основной матрицы согласно условию
+    private void rotateClockwise() {//метод поворачивает матрицу игрового поля на 90 градусов
+        int[][] result = new int[SIDE][SIDE];//создаем матрицу, где будут происходить все изменения
+        for (int y = 0; y < SIDE; y++) {
+            for (int x = 0; x < SIDE; x++) {
+                result[y][x] = gameField[SIDE - x - 1][y];//копируем значения из основной матрицы согласно условию
             }
         }
         gameField = result;//новая матрица становится основной
     }
 
-    private int getMaxTileValue(){//метод возвращает самое большое число в массиве
+    private int getMaxTileValue() {//метод возвращает самое большое число в массиве
         int max = 0;
-        for(int y = 0; y<SIDE; y++){
-            for(int x = 0; x<SIDE; x++){
-                if(gameField[y][x]>max){
+        for (int y = 0; y < SIDE; y++) {
+            for (int x = 0; x < SIDE; x++) {
+                if (gameField[y][x] > max) {
                     max = gameField[y][x];
                 }
             }
@@ -227,19 +250,20 @@ private boolean isGameStopped = false;//игра остановлена?
         return max;
     }
 
-    private void win(){//метод выводит на экран сообщение о победе
+    private void win() {//метод выводит на экран сообщение о победе
         isGameStopped = true;//игра остановлена
-        showMessageDialog(Color.WHITE,"YOU WIN",Color.BLACK,75);//сообщение
+        showMessageDialog(Color.WHITE, "YOU WIN", Color.BLACK, 75);//сообщение
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 
-    private boolean canUserMove(){//метод проверяет возможность хода
-        for (int y = 0;y<SIDE;y++){
-            for (int x = 0; x<SIDE;x++){
-                if(gameField[y][x]==0){//если есть пустые ячейки
+    private boolean canUserMove() {//метод проверяет возможность хода
+        for (int y = 0; y < SIDE; y++) {
+            for (int x = 0; x < SIDE; x++) {
+                if (gameField[y][x] == 0) {//если есть пустые ячейки
                     return true;
-                } else if((y<SIDE-1) && gameField[y][x] == gameField[y+1][x]){//если есть клетки, у которых соседи такие же числа
+                } else if ((y < SIDE - 1) && gameField[y][x] == gameField[y + 1][x]) {//если есть клетки, у которых соседи такие же числа
                     return true;
-                } else if ((x<SIDE-1)&& gameField[y][x] == gameField[y][x+1]){
+                } else if ((x < SIDE - 1) && gameField[y][x] == gameField[y][x + 1]) {
                     return true;
                 }
             }
@@ -247,8 +271,9 @@ private boolean isGameStopped = false;//игра остановлена?
         return false;
     }
 
-    private void gameOver(){//метод проигрыша
+    private void gameOver() {//метод проигрыша
         isGameStopped = true;
-        showMessageDialog(Color.WHITE,"YOU LOST", Color.BLACK, 75);
+        showMessageDialog(Color.WHITE, "YOU LOST", Color.BLACK, 75);
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 }

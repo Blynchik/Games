@@ -1,9 +1,12 @@
 package sample.SpaceInvaders;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import sample.Engine.*;
 import sample.SpaceInvaders.Objects.*;
+import sample.StartMe;
 
 public class SpaceInvadersGame extends Engine {
     public static final int WIDTH = 64;//ширина игрового поля
@@ -15,9 +18,16 @@ public class SpaceInvadersGame extends Engine {
     private List<Bullet> enemyBullets;//все пули
     private PlayerShip playerShip;//корабль игрока
     private boolean isGameStopped;//остановлена ли игра
+    private boolean firstStart = true;
     private int animationsCount;//отсчет анимации
     private List<Bullet> playerBullets;//пули игрока
     private static final int PLAYER_BULLETS_MAX = 1;//максимальное еоличество пуль игрока на экране
+    private String annotation = "The goal of the game is to defend your planet.\n" +
+                                "When you press \u2b05 \u27A1 you can change your position.\n" +
+                                "Press <SPACE> to fire. Every killed alien makes\n" +
+                                "them more aggressive.\n" +
+                                "                Enjoy your time!\n" +
+                                "       SPACE - OK, ESC - main menu";
 
     @Override
     public void initialize() {//инициализация игры
@@ -34,6 +44,7 @@ public class SpaceInvadersGame extends Engine {
         animationsCount = 0;//начало отсчета анимации
         playerBullets = new ArrayList<Bullet>();//создаем пули игрока
         score = 0;//очки
+        setAnnotation(annotation);
         drawScene();//отрисовываем
         setTurnTimer(40);//задаем таймер
     }
@@ -72,14 +83,18 @@ public class SpaceInvadersGame extends Engine {
 
     @Override
     public void onTurn(int step) {//отрисовка того, что происходит в момент времени
-        moveSpaceObjects();//передвигаем флот
-        Bullet bullet = enemyFleet.fire(this);//флот открывает огонь
-        if (bullet != null) {//если выстрел произошел
-            enemyBullets.add(bullet);//добавляем пулю в список
+        if (firstStart) {
+            return;
+        } else {
+            moveSpaceObjects();//передвигаем флот
+            Bullet bullet = enemyFleet.fire(this);//флот открывает огонь
+            if (bullet != null) {//если выстрел произошел
+                enemyBullets.add(bullet);//добавляем пулю в список
+            }
+            check();//проверяем все элементы, ненужные удаляем
+            setScore(score);//устанавливаем количество очков
+            drawScene();//отрисовываем сцену
         }
-        check();//проверяем все элементы, ненужные удаляем
-        setScore(score);//устанавливаем количество очков
-        drawScene();//отрисовываем сцену
     }
 
     private void moveSpaceObjects() {//передвигает объекты флота
@@ -133,6 +148,7 @@ public class SpaceInvadersGame extends Engine {
         } else {
             showMessageDialog(Color.WHITE, "YOU LOST", Color.RED, 75);
         }
+        showNoteDialog(Color.GREY, "SPACE - restart, ESC - main menu", Color.BLACK, 20);
     }
 
     private void stopGameWithDelay() {//метод проигрывает последнюю анимацию и только потом завершает игру
@@ -144,6 +160,17 @@ public class SpaceInvadersGame extends Engine {
 
     @Override
     public void onKeyPress(Key key) {//метод отвечает за нажатие клавиш
+        if (key == Key.ESCAPE) {
+            try {
+                Runtime.getRuntime().exec(StartMe.ENGINE_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_COMP);
+                Runtime.getRuntime().exec(StartMe.START_ME_START);
+                System.exit(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
         if (key == Key.SPACE && isGameStopped) {
             createGame();
         } else if (key == Key.LEFT) {
@@ -157,6 +184,9 @@ public class SpaceInvadersGame extends Engine {
             if (bullet != null && playerBullets.size() < PLAYER_BULLETS_MAX) {
                 playerBullets.add(bullet);
             }
+        }
+        if (firstStart && key == key.SPACE) {
+            firstStart = false;
         }
     }
 

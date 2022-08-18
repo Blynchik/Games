@@ -37,19 +37,30 @@ public class Engine extends Application {//implements GameScreen {
     private boolean showCoordinates = false;//по умолчанию не показываем координаты
     private boolean showGrid = true;//показываем разметку?
     private boolean isMessageShown = false;//сообщение показано?
+    private boolean isAnnotationShown = true;
+    private boolean isNoteShown = false;
     private boolean showTV = true; //показываем интерактивный экран?
 
     private StackPane cells[][];  // панель объектов (в данном случае двумерное поле из объектов StackPane),StackPane - панель, которая может отображать что-то слоями в качестве стека
     private Stage primaryStage;   //окно содержащее все элементы
+    private Stage annotationStage;
     private Text scoreText;       //переменная, куда сохраняются заработанные очки
     private Pane root;            //корневая панель
+    private Pane annotationPanel;
     private Timeline timeline = new Timeline();//создаем временную шкалу для проигрывания анимации
     private TextFlow dialogContainer;//макет для создания текстовых потоков
+    private TextFlow noteContainer;
+    private TextFlow annotationContainer;
+    private String annotation;
 
     private static Random random = new Random();//новый объект класса Random(случайное число)
     private static int cellSize;  //размер стороны клетки, из которых состоит игровое поле
 
     public Engine() {//конструктор
+    }
+
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
     }
 
     public void initialize() {//инициализация
@@ -93,7 +104,7 @@ public class Engine extends Application {//implements GameScreen {
     }
 
     private void createBorderImage() {//метод, который рисует рамку(интерактивный экран)
-        InputStream inputStream = Engine.class.getResourceAsStream("screen.png");//в входящий поток помещаем картинку по адресу, метод класса преобразует адрес в поток
+        InputStream inputStream = Engine.class.getResourceAsStream("screen1.png");//в входящий поток помещаем картинку по адресу, метод класса преобразует адрес в поток
         Image image = new Image(inputStream);//создаем новое изображение с URL inputStream
         ImageView imageView = new ImageView(image);//ImageView - обеспечивает отображение изображений Image
         imageView.setFitWidth((double) (this.width * cellSize + 250));//устанавливаем ширину, в рамках которой загруженное изображение может меняться
@@ -146,9 +157,15 @@ public class Engine extends Application {//implements GameScreen {
         Scene scene = new Scene(this.createContent());// Scene - контейнер для всех объектов Node, создаем такой, заполняем контейнер контентом с помощью метода
 
         scene.setOnMouseClicked((event) -> { //задает событие если кнопка нажата и отпущена для всего контенйера объектов
-            if (this.isMessageShown) { //если сообщение показано (по умолчанию false)
-                this.isMessageShown = false;//то сделать его false
-                this.dialogContainer.setVisible(false);//убрать текстовый контейнер(сделать невидимым)
+            if (isMessageShown) {
+                this.isMessageShown = false;//то не показываем сообщение
+                this.dialogContainer.setVisible(false);//не показываем диалоговое окно
+                isNoteShown = false;
+                noteContainer.setVisible(false);
+            }
+            if (isAnnotationShown) {
+                isAnnotationShown = false;
+                annotationContainer.setVisible(false);
             }
 
             if (cellSize != 0) {//если сторона клетки не ноль
@@ -176,22 +193,36 @@ public class Engine extends Application {//implements GameScreen {
             }
         });
         scene.setOnKeyPressed((event) -> {//в данной сцене(в основном контейнере) опредееляем функцию, если кнопка нажата, но не отпущена
-            if (this.isMessageShown) {//если сообщение показано
+            if (this.isMessageShown || isAnnotationShown) {//если сообщение показано
                 if (event.getCode().name().equalsIgnoreCase(Key.SPACE.name())) {//если нажата кнопка соответсвующая пробелу из нашего списка
-                    this.isMessageShown = false;//то не показываем сообщение
-                    this.dialogContainer.setVisible(false);//не показываем диалоговое окно
+                    if (isMessageShown) {
+                        this.isMessageShown = false;//то не показываем сообщение
+                        this.dialogContainer.setVisible(false);//не показываем диалоговое окно
+                        isNoteShown = false;
+                        noteContainer.setVisible(false);
+                    }
+                    if (isAnnotationShown) {
+                        isAnnotationShown = false;
+                        annotationContainer.setVisible(false);
+                    }
                 }
                 this.onKeyPress(this.getKey(event.getCode()));//кнопка нажата и не отпущена
             } else {//если сообщение показано
                 this.onKeyPress(this.getKey(event.getCode()));//то кнопка нажата и не отпущена
             }
         });
+
         primaryStage.setTitle("Blynchik Games");//задаем название окна
         primaryStage.setResizable(false);//нельзя растягивать и сжимать окно
 
         if (this.showTV) {//если показан интерактивный экран
             primaryStage.initStyle(StageStyle.TRANSPARENT);//устанавливаем стиль окна с прозрачным фоном и без декораций
             scene.setFill(Color.TRANSPARENT);//заполняем сцену прозрачным цветом
+        }
+
+        if (isAnnotationShown == true) {
+            showAnnotationDialog(sample.Engine.Color.WHITE, annotation, sample.Engine.Color.BLACK, 20);
+            this.annotationContainer.setVisible(true);//сделать видимым
         }
 
         primaryStage.setScene(scene);//помещаем в окно сцену(контейнер со всем)
@@ -252,6 +283,47 @@ public class Engine extends Application {//implements GameScreen {
         this.dialogContainer.setVisible(true);//сделать видимым
         this.dialogContainer.getChildren().add(messageText);//добавляем в контейнер текст
         this.isMessageShown = true;//текст становится видимым
+    }
+
+    public void showNoteDialog(sample.Engine.Color cellColor, String message, sample.Engine.Color textColor, int textSize) {//метод добавляет в корневую панель дилоговое окно
+        if (this.noteContainer == null) {//если контейнер с текстом пустой
+            this.noteContainer = new TextFlow();//помещаем в контейнер текст
+            this.root.getChildren().add(this.noteContainer);//контейнер добавляем в основную панель
+        }
+
+        this.noteContainer.getChildren().clear();//очищаем контейнер
+        Text messageText = new Text();//создаем новый текст
+        messageText.setFont(Font.font("Verdana", FontWeight.BOLD, (double) textSize));//для текста устанавливаем шрифт, жирность, размер
+        messageText.setText(message);//устанавливает текст
+        double preferredWidth = messageText.getLayoutBounds().getWidth();//предпочитаемая ширина = ширина панели для текста
+        messageText.setFill(this.toFXColor(textColor));//красим текст в цвет из списка
+        this.noteContainer.setLayoutX((this.root.getWidth() - preferredWidth) / 2.0D);//ширина панели для диалогового окна (ширина основной панели - ширина текста)/2
+        this.noteContainer.setLayoutY(this.root.getHeight() / 2.0D + 150.0D);//высота диалогового окна(высота основной панели/2 - 30)
+        this.noteContainer.setBackground(new Background(new BackgroundFill[]{new BackgroundFill(this.toFXColor(cellColor), CornerRadii.EMPTY, Insets.EMPTY)}));
+        //в диалоговом окне фон - это фон, заполняемый массивом из цвета из списка, кривизне углов(квадратные), внутренние смещения(нет)
+        this.noteContainer.setVisible(true);//сделать видимым
+        this.noteContainer.getChildren().add(messageText);//добавляем в контейнер текст
+        this.isNoteShown = true;//текст становится видимым
+    }
+
+    public void showAnnotationDialog(sample.Engine.Color cellColor, String message, sample.Engine.Color textColor, int textSize) {//метод добавляет в корневую панель дилоговое окно
+        if (this.annotationContainer == null) {//если контейнер с текстом пустой
+            this.annotationContainer = new TextFlow();//помещаем в контейнер текст
+            this.root.getChildren().add(this.annotationContainer);//контейнер добавляем в основную панель
+        }
+
+        this.annotationContainer.getChildren().clear();//очищаем контейнер
+        Text messageText = new Text();//создаем новый текст
+        messageText.setFont(Font.font("Verdana", FontWeight.BOLD, (double) textSize));//для текста устанавливаем шрифт, жирность, размер
+        setAnnotation(message);
+        messageText.setText(annotation);//устанавливает текст
+        messageText.setFill(this.toFXColor(textColor));//красим текст в цвет из списка
+        this.annotationContainer.setLayoutX(140);//ширина панели для диалогового окна (ширина основной панели - ширина текста)/2
+        this.annotationContainer.setLayoutY((this.height * cellSize + 140) / 2);//высота диалогового окна(высота основной панели/2 - 30)
+        this.annotationContainer.setBackground(new Background(new BackgroundFill[]{new BackgroundFill(this.toFXColor(cellColor), CornerRadii.EMPTY, Insets.EMPTY)}));
+        this.annotationContainer.setBorder(new Border(new BorderStroke[]{new BorderStroke(this.toFXColor(sample.Engine.Color.BLACK), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)}));
+        //в диалоговом окне фон - это фон, заполняемый массивом из цвета из списка, кривизне углов(квадратные), внутренние смещения(нет)
+        this.annotationContainer.getChildren().add(messageText);//добавляем в контейнер текст
     }
 
     public void setCellValue(int x, int y, String value) {//метод присвивает тексту в клетке какое-то значение
