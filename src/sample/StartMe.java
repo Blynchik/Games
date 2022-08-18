@@ -36,7 +36,7 @@ public class StartMe extends Engine {
     private Pane root;
     private Stage primaryStage;
     private List<Button> buttons;
-    public static final String JAVA_FX_LIB;
+    public static final String JAVA_FX_LIB = "C:\\Users\\Blynchik\\Desktop\\Frames\\javafx-sdk-18.0.2\\lib";
     public static final String GAME_ROOT;
 
     private static final String GAME2048_COMP;
@@ -65,7 +65,6 @@ public class StartMe extends Engine {
         Path path = Paths.get("Games.iml");
         String s = path.toAbsolutePath().toString().substring(0,(path.toAbsolutePath().toString().length()-9));
         GAME_ROOT = s;
-        JAVA_FX_LIB = s + "\\Frames\\javafx-sdk-18.0.2\\lib";
         GAME2048_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Game2048/*.java";
         GAME_SAPPER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Sapper/*.java";
         GAME_SNAKE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/Snake/*.java";
