@@ -177,7 +177,7 @@ public class StartMe extends Engine {
         createBackImage();
         this.createBorderImage();//создаем рисунок для рамки
         this.createButtons();//создаем кнопки
-        createPathFields();
+        //createPathFields();
         root.setBackground(new Background(new BackgroundFill[]{new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)}));
         //делаем, чтобы фон корневой панели не было видно
         return this.root;//возвращаем корневую панель
@@ -216,7 +216,7 @@ public class StartMe extends Engine {
         this.root.getChildren().add(imageView);//в корневую панель добавляем загруженную картинку
     }
 
-    private void createPathFields() {
+    /*private void createPathFields() {
         Text path = new Text("Path to JavaFx:");
         path.setLayoutX(115);
         path.setLayoutY(545);
@@ -245,6 +245,6 @@ public class StartMe extends Engine {
         root.getChildren().add(gamePath);
         root.getChildren().add(javaFXPath);
         root.getChildren().add(gameRoot);
-    }
+    }*/
 }
 
