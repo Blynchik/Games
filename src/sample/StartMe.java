@@ -23,6 +23,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,29 +36,54 @@ public class StartMe extends Engine {
     private Pane root;
     private Stage primaryStage;
     private List<Button> buttons;
-    public static final String JAVA_FX_LIB = "C:\\Users\\Blynchik\\Desktop\\Frames\\javafx-sdk-18.0.2\\lib";
-    public static final String GAME_ROOT = "C:/Users/Blynchik/Desktop/Games/src/";
+    public static final String JAVA_FX_LIB;
+    public static final String GAME_ROOT;
 
-    private final String GAME2048_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Game2048/*.java";
-    private final String GAME_SAPPER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Sapper/*.java";
-    private final String GAME_SNAKE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/Snake/*.java";
-    private final String GAME_RACER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/Racer/*.java";
-    private final String GAME_MOONLANDER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/MoonLander/*.java";
-    private final String GAME_SPACE_INVADER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/SpaceInvaders/*.java";
+    private static final String GAME2048_COMP;
+    private static final String GAME_SAPPER_COMP;
+    private static final String GAME_SNAKE_COMP;
+    private static final String GAME_RACER_COMP;
+    private static final String GAME_MOONLANDER_COMP;
+    private static final String GAME_SPACE_INVADER_COMP;
 
-    private final String GAME2048_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Game2048.Game2048";
-    private final String GAME_SAPPER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Sapper.Sapper";
-    private final String GAME_SNAKE_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Snake.SnakeGame";
-    private final String GAME_RACER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Racer.RacerGame";
-    private final String GAME_MOONLANDER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.MoonLander.MoonLanderGame";
-    private final String GAME_SPACE_INVADERS_GAME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.SpaceInvaders.SpaceInvadersGame";
+    private static final String GAME2048_START;
+    private static final String GAME_SAPPER_START;
+    private static final String GAME_SNAKE_START;
+    private static final String GAME_RACER_START;
+    private static final String GAME_MOONLANDER_START;
+    private static final String GAME_SPACE_INVADERS_GAME_START;
 
-    public static final String START_ME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe";
+    public static final String START_ME_START;
 
-    public static final String ENGINE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/Engine/*.java";
-    public static final String START_ME_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java";
+    public static final String ENGINE_COMP;
+    public static final String START_ME_COMP;
 
     public StartMe() {//конструктор
+    }
+
+    static {
+        Path path = Paths.get("Games.iml");
+        String s = path.toAbsolutePath().toString().substring(0,(path.toAbsolutePath().toString().length()-9));
+        GAME_ROOT = s;
+        JAVA_FX_LIB = s + "\\Frames\\javafx-sdk-18.0.2\\lib";
+        GAME2048_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Game2048/*.java";
+        GAME_SAPPER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + "sample/Sapper/*.java";
+        GAME_SNAKE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/Snake/*.java";
+        GAME_RACER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/Racer/*.java";
+        GAME_MOONLANDER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/MoonLander/*.java";
+        GAME_SPACE_INVADER_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d " + GAME_ROOT + " sample/SpaceInvaders/*.java";
+
+        GAME2048_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Game2048.Game2048";
+        GAME_SAPPER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Sapper.Sapper";
+        GAME_SNAKE_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Snake.SnakeGame";
+        GAME_RACER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.Racer.RacerGame";
+        GAME_MOONLANDER_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.MoonLander.MoonLanderGame";
+        GAME_SPACE_INVADERS_GAME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.SpaceInvaders.SpaceInvadersGame";
+
+        START_ME_START = "java --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe";
+
+        ENGINE_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/Engine/*.java";
+        START_ME_COMP = "javac --module-path \"" + JAVA_FX_LIB + "\" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java";
     }
 
     public void start(Stage primaryStage) {
