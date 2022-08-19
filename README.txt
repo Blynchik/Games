@@ -23,7 +23,7 @@
 5.Запустить командную строку и пройти в корневую папку программы(Games-master/src)
   или
   Пройти в корневую папку программы(Games-master/src), зажать Shift, нажать ПКМ и выбрать "Открыть окно PowerShell здесь"
-6.Ввести команды(длинная строка): javac --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample.StartMe.java
+6.Ввести команды(длинная строка): javac --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
                                   java --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -51,6 +51,6 @@ How to run using command prompt:
 5.Start the command prompt and go to the root of the program (Games-master/src)
   or
   Go to the root of the program (Games-master/src), hold down Shift, press RMB and select "Open PowerShell here"
-6. Enter commands (long string): javac --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample.StartMe.java
+6. Enter commands (long string): javac --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
                                  java --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
 
