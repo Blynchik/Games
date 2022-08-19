@@ -8,9 +8,10 @@
 5.В IDEA перейти File->Project Structure->Libraries и удалить lib нажатием "-". Подтвердить - "Aplly"
 6.Там же нажатием "+" добавить новую библиотеку. Библиотека находится в папке lib пакета JavaFx. Подтвердить - "Aplly"
 Например, C:\User\Desktop\javafx-sdk-18.0.2\lib
-7.В IDEA перейти Run->Edit Configurations->Modify options->Add VM Options. В строке VM options вставить:
+7.Запустить StartMe.java 
+8.В IDEA перейти Run->Edit Configurations->Modify options->Add VM Options. В строке VM options вставить:
 --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH
-8.Запустить StartMe.java 
+9.Запустить StartMe.java 
 
 
 Как запустить с помощью командной строки:
@@ -37,9 +38,10 @@ How to run with IDEA:
 5.In IDEA go to File->Project Structure->Libraries and delete lib by pressing "-" and apply.
 6.In the same place by pressing "+" add a new library. The library is located in the lib pack in the JavaFx package and apply.
 For example C:\User\Desktop\javafx-sdk-18.0.2\lib
-7.In IDEA, go to Run->Edit Configurations->Modify options->Add VM Options. In the VM options line, paste:
+7.Run StartMe.java
+8.In IDEA, go to Run->Edit Configurations->Modify options->Add VM Options. In the VM options line, paste:
 --module-path "Path to the lib pack in the JavaFx package (leave quotes)" --add-modules ALL-MODULE-PATH
-8.Run StartMe.java
+9.Run StartMe.java
 
 How to run using command prompt:
 
