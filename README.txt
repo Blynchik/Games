@@ -11,7 +11,9 @@
 7.Запустить StartMe.java (Так и должно быть:Error: JavaFX runtime components are missing, and are required to run this application)
 8.В IDEA перейти Run->Edit Configurations->Modify options->Add VM Options. В строке VM options вставить:
 --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH
-9.Запустить StartMe.java 
+9.Там же в строке Working Directory указан ли путь до папки src.
+Например, C:\User\Desktop\Games-master\src
+10.Запустить StartMe.java 
 
 
 Как запустить с помощью командной строки:
@@ -41,7 +43,9 @@ For example C:\User\Desktop\javafx-sdk-18.0.2\lib
 7.Run StartMe.java (It's OK: Error: JavaFX runtime components are missing, and are required to run this application)
 8.In IDEA, go to Run->Edit Configurations->Modify options->Add VM Options. In the VM options line, paste:
 --module-path "Path to the lib pack in the JavaFx package (leave quotes)" --add-modules ALL-MODULE-PATH
-9.Run StartMe.java
+9.In the same place check path to the root in the Working Directory line.
+Sample: C:\User\Desktop\Games-master\src
+10.Run StartMe.java
 
 How to run using command prompt:
 
