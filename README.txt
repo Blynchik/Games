@@ -59,4 +59,3 @@ How to run using command prompt:
   Go to the root of the program (Games-master/src), hold down Shift, press RMB and select "Open PowerShell here"
 6.Enter commands (long string): javac --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
                                 java --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
-
