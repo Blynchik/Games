@@ -11,7 +11,7 @@
 7.Запустить StartMe.java (Так и должно быть:Error: JavaFX runtime components are missing, and are required to run this application)
 8.В IDEA перейти Run->Edit Configurations->Modify options->Add VM Options. В строке VM options вставить:
 --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH
-9.Там же в строке Working Directory указан ли путь до папки src.
+9.Там же в строке Working Directory прверить указан ли путь до папки src.
 Например, C:\User\Desktop\Games-master\src
 10.Запустить StartMe.java 
 
