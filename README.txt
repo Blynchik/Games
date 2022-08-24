@@ -1,33 +1,33 @@
-Как запустить с помощью IDEA:
+РљР°Рє Р·Р°РїСѓСЃС‚РёС‚СЊ СЃ РїРѕРјРѕС‰СЊСЋ IDEA:
 
-1.Скачать JavaFx по ссылке https://gluonhq.com/products/javafx/ и распаковать
-2.Скачать репозиторий и распаковать
-3.Открыть в IDEA Games-master\src\sample\StartMe.java
-4.Изменить содержимое строки #39 String JAVA_FX_LIB на путь к папке lib в пакете с JavaFx.
-  Например, C:\User\Desktop\javafx-sdk-18.0.2\lib
-5.В IDEA перейти File->Project Structure->Libraries и удалить lib нажатием "-". Подтвердить - "Aplly"
-6.Там же нажатием "+" добавить новую библиотеку. Библиотека находится в папке lib пакета JavaFx. Подтвердить - "Aplly"
-Например, C:\User\Desktop\javafx-sdk-18.0.2\lib
-7.Запустить StartMe.java (Так и должно быть:Error: JavaFX runtime components are missing, and are required to run this application)
-8.В IDEA перейти Run->Edit Configurations->Modify options->Add VM Options. В строке VM options вставить:
---module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH
-9.Там же в строке Working Directory указан ли путь до папки src.
-Например, C:\User\Desktop\Games-master\src
-10.Запустить StartMe.java 
+1.РЎРєР°С‡Р°С‚СЊ JavaFx РїРѕ СЃСЃС‹Р»РєРµ https://gluonhq.com/products/javafx/ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ
+2.РЎРєР°С‡Р°С‚СЊ СЂРµРїРѕР·РёС‚РѕСЂРёР№ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ
+3.РћС‚РєСЂС‹С‚СЊ РІ IDEA Games-master\src\sample\StartMe.java
+4.РР·РјРµРЅРёС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃС‚СЂРѕРєРё #39 String JAVA_FX_LIB РЅР° РїСѓС‚СЊ Рє РїР°РїРєРµ lib РІ РїР°РєРµС‚Рµ СЃ JavaFx.
+  РќР°РїСЂРёРјРµСЂ, C:\User\Desktop\javafx-sdk-18.0.2\lib
+5.Р’ IDEA РїРµСЂРµР№С‚Рё File->Project Structure->Libraries Рё СѓРґР°Р»РёС‚СЊ lib РЅР°Р¶Р°С‚РёРµРј "-". РџРѕРґС‚РІРµСЂРґРёС‚СЊ - "Aplly"
+6.РўР°Рј Р¶Рµ РЅР°Р¶Р°С‚РёРµРј "+" РґРѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ Р±РёР±Р»РёРѕС‚РµРєСѓ. Р‘РёР±Р»РёРѕС‚РµРєР° РЅР°С…РѕРґРёС‚СЃСЏ РІ РїР°РїРєРµ lib РїР°РєРµС‚Р° JavaFx. РџРѕРґС‚РІРµСЂРґРёС‚СЊ - "Aplly"
+РќР°РїСЂРёРјРµСЂ, C:\User\Desktop\javafx-sdk-18.0.2\lib
+7.Р—Р°РїСѓСЃС‚РёС‚СЊ StartMe.java (РўР°Рє Рё РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ:Error: JavaFX runtime components are missing, and are required to run this application)
+8.Р’ IDEA РїРµСЂРµР№С‚Рё Run->Edit Configurations->Modify options->Add VM Options. Р’ СЃС‚СЂРѕРєРµ VM options РІСЃС‚Р°РІРёС‚СЊ:
+--module-path "РџСѓС‚СЊ Рє РїР°РїРєРµ lib РІ JavaFx(РєР°РІС‹С‡РєРё РѕСЃС‚Р°РІРёС‚СЊ)" --add-modules ALL-MODULE-PATH
+9.РўР°Рј Р¶Рµ РІ СЃС‚СЂРѕРєРµ Working Directory СѓРєР°Р·Р°РЅ Р»Рё РїСѓС‚СЊ РґРѕ РїР°РїРєРё src.
+РќР°РїСЂРёРјРµСЂ, C:\User\Desktop\Games-master\src
+10.Р—Р°РїСѓСЃС‚РёС‚СЊ StartMe.java 
 
 
-Как запустить с помощью командной строки:
+РљР°Рє Р·Р°РїСѓСЃС‚РёС‚СЊ СЃ РїРѕРјРѕС‰СЊСЋ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё:
 
-1.Скачать JavaFx по ссылке https://gluonhq.com/products/javafx/ и распаковать
-2.Скачать репозиторий и распаковать
-3.Открыть в IDEA  или в текстовом редакторе Games-master\src\sample\StartMe.java
-4.Изменить содержимое строки #39 String JAVA_FX_LIB на путь к папке lib в пакете с JavaFx.
-  Например, C:\User\Desktop\javafx-sdk-18.0.2\lib
-5.Запустить командную строку и пройти в корневую папку программы(Games-master/src)
-  или
-  Пройти в корневую папку программы(Games-master/src), зажать Shift, нажать ПКМ и выбрать "Открыть окно PowerShell здесь"
-6.Ввести команды(длинная строка): javac --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
-                                  java --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
+1.РЎРєР°С‡Р°С‚СЊ JavaFx РїРѕ СЃСЃС‹Р»РєРµ https://gluonhq.com/products/javafx/ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ
+2.РЎРєР°С‡Р°С‚СЊ СЂРµРїРѕР·РёС‚РѕСЂРёР№ Рё СЂР°СЃРїР°РєРѕРІР°С‚СЊ
+3.РћС‚РєСЂС‹С‚СЊ РІ IDEA  РёР»Рё РІ С‚РµРєСЃС‚РѕРІРѕРј СЂРµРґР°РєС‚РѕСЂРµ Games-master\src\sample\StartMe.java
+4.РР·РјРµРЅРёС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃС‚СЂРѕРєРё #39 String JAVA_FX_LIB РЅР° РїСѓС‚СЊ Рє РїР°РїРєРµ lib РІ РїР°РєРµС‚Рµ СЃ JavaFx.
+  РќР°РїСЂРёРјРµСЂ, C:\User\Desktop\javafx-sdk-18.0.2\lib
+5.Р—Р°РїСѓСЃС‚РёС‚СЊ РєРѕРјР°РЅРґРЅСѓСЋ СЃС‚СЂРѕРєСѓ Рё РїСЂРѕР№С‚Рё РІ РєРѕСЂРЅРµРІСѓСЋ РїР°РїРєСѓ РїСЂРѕРіСЂР°РјРјС‹(Games-master/src)
+  РёР»Рё
+  РџСЂРѕР№С‚Рё РІ РєРѕСЂРЅРµРІСѓСЋ РїР°РїРєСѓ РїСЂРѕРіСЂР°РјРјС‹(Games-master/src), Р·Р°Р¶Р°С‚СЊ Shift, РЅР°Р¶Р°С‚СЊ РџРљРњ Рё РІС‹Р±СЂР°С‚СЊ "РћС‚РєСЂС‹С‚СЊ РѕРєРЅРѕ PowerShell Р·РґРµСЃСЊ"
+6.Р’РІРµСЃС‚Рё РєРѕРјР°РЅРґС‹(РґР»РёРЅРЅР°СЏ СЃС‚СЂРѕРєР°): javac --module-path "РџСѓС‚СЊ Рє РїР°РїРєРµ lib РІ JavaFx(РєР°РІС‹С‡РєРё РѕСЃС‚Р°РІРёС‚СЊ)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
+                                  java --module-path "РџСѓС‚СЊ Рє РїР°РїРєРµ lib РІ JavaFx(РєР°РІС‹С‡РєРё РѕСЃС‚Р°РІРёС‚СЊ)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 How to run with IDEA:
