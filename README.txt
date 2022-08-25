@@ -16,7 +16,7 @@
 10.Запустить StartMe.java 
 
 
-Как запустить с помощью командной строки:
+Как запустить с помощью командной строки (рекомендовано):
 
 1.Скачать JavaFx по ссылке https://gluonhq.com/products/javafx/ и распаковать
 2.Скачать репозиторий и распаковать
@@ -26,8 +26,9 @@
 5.Запустить командную строку и пройти в корневую папку программы(Games-master/src)
   или
   Пройти в корневую папку программы(Games-master/src), зажать Shift, нажать ПКМ и выбрать "Открыть окно PowerShell здесь"
-6.Ввести команды(длинная строка): javac --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
-                                  java --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
+6.Ввести команды по очереди: 
+javac --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
+java --module-path "Путь к папке lib в JavaFx(кавычки оставить)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 How to run with IDEA:
@@ -47,7 +48,7 @@ For example C:\User\Desktop\javafx-sdk-18.0.2\lib
 Sample: C:\User\Desktop\Games-master\src
 10.Run StartMe.java
 
-How to run using command prompt:
+How to run using command prompt (recomended):
 
 1.Download JavaFx from the link https://gluonhq.com/products/javafx/ and unpack
 2.Download the repository and unpack
@@ -57,5 +58,6 @@ How to run using command prompt:
 5.Start the command prompt and go to the root of the program (Games-master/src)
   or
   Go to the root of the program (Games-master/src), hold down Shift, press RMB and select "Open PowerShell here"
-6.Enter commands (long string): javac --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
-                                java --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
+6.Enter commands one by one: 
+javac --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -d out/production/Engine sample/StartMe.java
+java --module-path "Path to the lib in the JavaFx (leave quotes)" --add-modules ALL-MODULE-PATH -classpath out/production/Engine sample.StartMe
