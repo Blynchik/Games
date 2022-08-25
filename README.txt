@@ -48,7 +48,7 @@ For example C:\User\Desktop\javafx-sdk-18.0.2\lib
 Sample: C:\User\Desktop\Games-master\src
 10.Run StartMe.java
 
-How to run using command prompt (recomended):
+How to run using command prompt (recommended):
 
 1.Download JavaFx from the link https://gluonhq.com/products/javafx/ and unpack
 2.Download the repository and unpack
